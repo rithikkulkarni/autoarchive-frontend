@@ -7,10 +7,86 @@ import Search from "../components/Search.jsx";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AutoArchive</title>
+    <style>
+      :root {
+        --bg: #0b0f17;
+        --panel: rgba(255,255,255,0.06);
+        --panel2: rgba(255,255,255,0.10);
+        --text: rgba(255,255,255,0.92);
+        --muted: rgba(255,255,255,0.70);
+        --ring: rgba(255,255,255,0.18);
+        --shadow: 0 18px 50px rgba(0,0,0,0.45);
+        --radius: 18px;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui;
+        color: var(--text);
+        background: var(--bg);
+        min-height: 100vh;
+      }
+
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 56px 16px 70px;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 30px 0 14px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.55);
+        font-size: 12px;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: clamp(34px, 4vw, 54px);
+        line-height: 1.06;
+      }
+
+      .sub {
+        margin: 0 auto;
+        max-width: 720px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .searchShell {
+        margin: 22px auto 0;
+        max-width: 860px;
+        padding: 14px;
+        border-radius: var(--radius); /* was 999px */
+        background: linear-gradient(180deg, var(--panel2), var(--panel));
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: var(--shadow);
+      }
+
+      .below {
+        margin-top: 22px;
+      }
+    </style>
   </head>
-  <body style="font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 0 16px;">
-    <h1>AutoArchive</h1>
-    <p>Search car models and track market prices over time.</p>
-    <Search client:load />
+
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <p class="eyebrow">AutoArchive</p>
+        <h1>Find a car model fast.</h1>
+        <p class="sub">Type a make, model, or trim. Results appear instantly as cards.</p>
+        <p></p>
+
+        <Search client:load />
+      </div>
+
+      <div class="below"></div>
+    </div>
   </body>
 </html>
