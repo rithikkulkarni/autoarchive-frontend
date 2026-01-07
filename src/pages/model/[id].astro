@@ -1,0 +1,38 @@
+---
+import { getModelById } from "../../lib/api.js";
+
+const { id } = Astro.params;
+
+let model = null;
+let error = null;
+
+try {
+  model = await getModelById(id);
+} catch (e) {
+  error = e.message ?? String(e);
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Model | AutoArchive</title>
+  </head>
+  <body style="font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 0 16px;">
+    <a href="/">← Back</a>
+
+    {error ? (
+      <p style="color: crimson; margin-top: 16px;">{error}</p>
+    ) : (
+      <>
+        <h1 style="margin-top: 16px;">
+          {model.year} {model.make} {model.model} {model.trim ? `(${model.trim})` : ""}
+        </h1>
+        <pre style="background: #fafafa; padding: 12px; border-radius: 10px; overflow: auto;">
+{JSON.stringify(model, null, 2)}
+        </pre>
+      </>
+    )}
+  </body>
+</html>
