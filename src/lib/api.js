@@ -33,3 +33,9 @@ export async function getModelCard(id) {
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
+
+export async function getPriceHistory(id, weeks = 26) {
+  const res = await fetch(`${API_BASE}/models/${id}/price-history?weeks=${weeks}`);
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}

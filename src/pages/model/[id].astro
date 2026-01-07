@@ -1,38 +1,32 @@
 ---
-import { getModelById } from "../../lib/api.js";
+export const prerender = false;
+
+import ModelPriceChart from "../../components/ModelPriceChart.jsx";
+import { getModelCard, getPriceHistory } from "../../lib/api.js";
 
 const { id } = Astro.params;
 
-let model = null;
-let error = null;
-
-try {
-  model = await getModelById(id);
-} catch (e) {
-  error = e.message ?? String(e);
-}
+const card = await getModelCard(id);
+const history = await getPriceHistory(id, 26);
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Model | AutoArchive</title>
+    <title>{card.year} {card.make} {card.model}</title>
   </head>
-  <body style="font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 0 16px;">
-    <a href="/">← Back</a>
 
-    {error ? (
-      <p style="color: crimson; margin-top: 16px;">{error}</p>
-    ) : (
-      <>
-        <h1 style="margin-top: 16px;">
-          {model.year} {model.make} {model.model} {model.trim ? `(${model.trim})` : ""}
-        </h1>
-        <pre style="background: #fafafa; padding: 12px; border-radius: 10px; overflow: auto;">
-{JSON.stringify(model, null, 2)}
-        </pre>
-      </>
-    )}
+  <body style="background:#0b0f17;color:white;font-family:system-ui;">
+    <div style="max-width:1100px;margin:0 auto;padding:40px 16px;">
+      <h1 style="margin-bottom:8px;">
+        {card.year} {card.make} {card.model}{card.trim && ` (${card.trim})`}
+      </h1>
+
+      <div style="opacity:0.7;margin-bottom:28px;">
+        {card.canonicalKey}
+      </div>
+
+      <ModelPriceChart history={history} client:load />
+    </div>
   </body>
 </html>
