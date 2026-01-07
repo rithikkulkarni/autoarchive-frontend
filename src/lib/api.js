@@ -39,3 +39,9 @@ export async function getPriceHistory(id, weeks = 26) {
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
+
+export async function getMileageHistogram(id, days = 56, bins = 12) {
+  const res = await fetch(`${API_BASE}/models/${id}/mileage-histogram?days=${days}&bins=${bins}`);
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}

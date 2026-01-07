@@ -2,12 +2,14 @@
 export const prerender = false;
 
 import ModelPriceChart from "../../components/ModelPriceChart.jsx";
-import { getModelCard, getPriceHistory } from "../../lib/api.js";
+import ModelMileageHistogram from "../../components/ModelMileageHistogram.jsx";
+import { getModelCard, getPriceHistory, getMileageHistogram } from "../../lib/api.js";
 
 const { id } = Astro.params;
 
 const card = await getModelCard(id);
 const history = await getPriceHistory(id, 26);
+const hist = await getMileageHistogram(id, 56, 12);
 ---
 
 <html lang="en">
@@ -27,6 +29,8 @@ const history = await getPriceHistory(id, 26);
       </div>
 
       <ModelPriceChart history={history} client:load />
+      <div style="height: px;"></div>
+      <ModelMileageHistogram hist={hist} client:load />
     </div>
   </body>
 </html>
